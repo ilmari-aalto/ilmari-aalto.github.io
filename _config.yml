@@ -1,13 +1,26 @@
-collections:
-  authors:
-    output: true
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+
+# Setup
+title:               Notes 
+tagline:             'On data and data technologies'
+description:         'Notes on data and data technologies'
+# url:                 http://lanyon.getpoole.com
+baseurl:             ''
+paginate:            5
+
+# About/contact
+author:
+  name:              Ilmari Aalto
+  # url:               https://twitter.com/mdo
+  # email:             markdotto@gmail.com
+
+# Custom vars
+# version:             1.0.0
 
 defaults:
-  - scope:
-      path: ""
-      type: "authors"
-    values:
-      layout: "author"
   - scope:
       path: ""
       type: "posts"
