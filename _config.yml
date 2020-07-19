@@ -21,7 +21,7 @@
 title: Notes on data and data technologies
 # email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  This is a place to note down some ideas that I get from my work with data.
+  Writing down some ideas from my work with data.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: 
@@ -31,6 +31,8 @@ github_username:  ilmari-aalto
 theme: minima
 plugins:
   - jekyll-feed
+
+google_analytics: UA-54965810-2
 
 # Exclude from processing.
 # The following items will not be processed, by default.
