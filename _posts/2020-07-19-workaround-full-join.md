@@ -4,11 +4,11 @@ title:  "Workaround for full outer joins"
 date:   2020-07-19
 categories: sql
 ---
-Full outer joins are often confusing, hard to write correctly and easy to break when extending the existing code. I use perhaps one full outer join every two months or so, but most of the time try to work around them. In this post I present `union all` as a possible workaround for a full outer join.
+Full outer joins are often confusing, hard to write correctly and easily broken when extending the existing code. I use perhaps one full outer join every two months or so, but most of the time try to work around them. In this post I present `union all` as a possible workaround for a full outer join.
 
 ## Full outer join example
 
-Let imagine we try to join together impressions, clicks and conversions by `campaign_id`. The first thought would be to left join them together starting with impressions. All three events are independent, however, so we need full joins. The query could look for example like this:
+Let's imagine we try to join together impressions, clicks and conversions by `campaign_id`. The first thought would be to left join them together starting with impressions. All three events are independent, however, so we need full joins. The query could look for example like this:
 
 {% highlight sql %}
 select
