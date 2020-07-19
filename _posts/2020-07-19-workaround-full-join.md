@@ -40,7 +40,7 @@ where dt between '2020-07-01' and '2020-07-19'
 group by 1, 2;
 {% endhighlight %}
 
-How about a filter on a column that's only in one of the tables, such as `amount` in `conversions`? If we simply write `where amount > 0` then the full outer join would switch to an inner join, and that would not be the desired result. So instead we could write `where (amount > 0 or amount is null)` but that's hacky. Besides, what happens if `amount` is nullable in `conversions`? Sure, we can get around it by preparing the conversion data in a subquery, for example:
+How about a filter on a column that's only in one of the tables, such as `amount` in `conversions`? If we simply write `where amount > 0` then the full outer join would switch to an inner join, and that would not be the desired result. So instead we could write `where (amount > 0 or amount is null)` but that's hacky! Besides, what happens if `amount` is nullable in `conversions`? Sure, we can get around it by preparing the conversion data in a subquery, for example:
 
 {% highlight sql %}
 with conversions_with_amount as (
