@@ -13,9 +13,9 @@ Let imagine we try to join together impressions, clicks and conversions by `camp
 {% highlight sql %}
 select
   campaign_id,
-  coalesce(sum(impressions), 0) as impressions,
-  coalesce(sum(clicks), 0) as clicks,
-  coalesce(sum(conversions), 0) as conversions
+  count(impressions.campaign_id) as impressions,
+  count(clicks.campaign_id) as clicks,
+  count(conversions.campaign_id) as conversions
 from impressions
 full outer join clicks using (campaign_id)
 full outer join conversions using (campaign_id)
@@ -30,9 +30,9 @@ select
   coalesce(impressions.event_ts,
     clicks.event_ts,
     conversions.event_ts) :: date as dt,
-  coalesce(sum(impressions), 0) as impressions,
-  coalesce(sum(clicks), 0) as clicks,
-  coalesce(sum(conversions), 0) as conversions
+  count(impressions.campaign_id) as impressions,
+  count(clicks.campaign_id) as clicks,
+  count(conversions.campaign_id) as conversions
 from impressions
 full outer join clicks using (campaign_id)
 full outer join conversions using (campaign_id)
@@ -46,8 +46,7 @@ How about a filter on a column that's only in one of the tables, such as `amount
 with conversions_with_amount as (
   select
     campaign_id,
-    event_ts,
-    conversions
+    event_ts
   from conversions
   where amount > 0
 )
@@ -58,14 +57,14 @@ But to be honest, that's already quite complicated for the problem at hand.
 
 ## Mimic full outer join with union all
 
-Instead, we could switch to `union all`'s and use zeros or nulls in a clever way, and the solution could look like this:
+Instead, we could switch to `union all`'s and use ones together with zeros or nulls in a clever way, and the solution could look like this:
 
 {% highlight sql %}
 with combine_events as (
   select
     campaign_id,
     event_ts,
-    impressions,
+    1 as impressions,
     0 as clicks,
     0 as conversions
   from impressions
@@ -76,7 +75,7 @@ with combine_events as (
     campaign_id,
     event_ts,
     0 as impressions,
-    clicks,
+    1 as clicks,
     0 as conversions
   from clicks
 
@@ -87,7 +86,7 @@ with combine_events as (
     event_ts,
     0 as impressions,
     0 as clicks,
-    conversions
+    1 as conversions
   from conversions
   where amount > 0
 )
